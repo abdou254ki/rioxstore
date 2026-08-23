@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Riox Ads | أفضل الاشتراكات الرقمية في الجزائر</title>
+    
+    <!-- Meta Pixel Code -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID_HERE'); /* ضع ID البيكسل الخاص بك */
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"/></noscript>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root { --primary: #0084ff; --primary-dark: #005bb5; --bg-color: #f4f7f9; --text-main: #2c3e50; --white: #ffffff; --personal-badge: #28a745; --invite-badge: #ff9800; }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Cairo', sans-serif; background-color: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; min-height: 100vh; user-select: none; -webkit-user-select: none; -ms-user-select: none; }
+        img { pointer-events: none; max-width: 100%; height: auto; }
+
+        .store-notice { background: #ffeaa7; color: #d35400; text-align: center; padding: 10px; font-weight: 700; font-size: 0.95rem; display: none; }
+        
+        header { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: var(--white); padding: 30px 15px; text-align: center; box-shadow: 0 4px 15px rgba(0, 132, 255, 0.2); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+        header h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 5px; letter-spacing: 1px; }
+        header p { font-size: 1rem; opacity: 0.9; }
+
+        main { flex: 1; padding: 20px 15px; max-width: 1000px; margin: 0 auto; width: 100%; }
+        .section-title { text-align: center; font-size: 1.4rem; font-weight: 700; margin-bottom: 20px; color: var(--text-main); }
+
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+        @media (min-width: 1024px) { .products-grid { grid-template-columns: repeat(4, 1fr); } }
+
+        .product-card { background: var(--white); border-radius: 12px; padding: 12px; text-align: center; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer; transition: transform 0.2s ease; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-card:active { transform: scale(0.96); }
+        .product-card.unavailable { opacity: 0.6; filter: grayscale(100%); cursor: not-allowed; }
+        .product-card.unavailable::after { content: 'نفذت الكمية'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(220, 53, 69, 0.9); color: #fff; padding: 5px 10px; border-radius: 5px; font-weight: bold; width: 80%; }
+
+        .product-image-container { width: 100%; aspect-ratio: 1; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; padding: 10px; }
+        .product-image-container img { width: 75%; height: 75%; object-fit: contain; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05)); }
+        
+        .product-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 5px; }
+        .product-card .start-price { font-size: 0.85rem; color: #666; font-weight: 600; }
+
+        .badge { position: absolute; top: -5px; right: -5px; padding: 4px 10px; border-radius: 20px; color: var(--white); font-size: 0.75rem; font-weight: 700; box-shadow: 0 2px 5px rgba(0,0,0,0.15); z-index: 10; }
+        .badge-personal { background-color: var(--personal-badge); }
+        .badge-invite { background-color: var(--invite-badge); }
+
+        footer { background-color: #fff; text-align: center; padding: 15px; font-size: 0.9rem; color: #777; border-top: 1px solid #eaeaea; }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 9999; padding: 15px; }
+        .modal-overlay.active { display: flex; }
+        .modal-box { background: var(--white); width: 100%; max-width: 420px; border-radius: 20px; padding: 25px 20px; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close-btn { position: absolute; top: 15px; left: 15px; background: #f1f1f1; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; color: #333; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
+        .modal-header-info { text-align: center; margin-bottom: 20px; }
+        .modal-header-info img { width: 70px; height: 70px; object-fit: contain; margin-bottom: 15px; }
+        .modal-header-info h2 { font-size: 1.4rem; color: var(--primary-dark); }
+        .product-notice { background: #f8f9fa; border-right: 4px solid var(--primary); padding: 10px 12px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 20px; font-weight: 600; color: #444; }
+        
+        .duration-label { font-weight: 700; margin-bottom: 10px; display: block; }
+        .durations-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .duration-btn { flex: 1; min-width: calc(50% - 5px); padding: 10px; background: var(--white); border: 2px solid #e0e0e0; border-radius: 10px; font-family: inherit; font-weight: 700; color: #555; cursor: pointer; transition: all 0.2s; }
+        .duration-btn.active { border-color: var(--primary); background: rgba(0, 132, 255, 0.08); color: var(--primary); }
+        .price-display { text-align: center; font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 20px; direction: ltr; }
+        
+        .primary-btn { width: 100%; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: var(--white); border: none; padding: 15px; border-radius: 12px; font-size: 1.1rem; font-weight: 700; font-family: inherit; cursor: pointer; box-shadow: 0 4px 10px rgba(0, 132, 255, 0.3); transition: transform 0.2s; }
+        .primary-btn:active { transform: scale(0.97); }
+        .form-group { margin-bottom: 15px; text-align: right; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.95rem; }
+        .form-group input { width: 100%; padding: 12px 15px; border: 1px solid #d1d5db; border-radius: 10px; font-family: inherit; font-size: 1rem; outline: none; }
+        .form-group input:focus { border-color: var(--primary); }
+        .hidden { display: none !important; }
+        .whatsapp-btn { background: linear-gradient(135deg, #25D366, #128C7E); box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3); }
+    </style>
+</head>
+<body>
+
+    <div class="store-notice" id="storeNotice"></div>
+
+    <header>
+        <h1>riox ads</h1>
+        <p>أفضل الاشتراكات الرقمية.. بأسعار مهبولة!</p>
+    </header>
+
+    <main>
+        <h2 class="section-title">خيّر اشتراكك من هنا و اطلب درك</h2>
+        <div class="products-grid" id="productsGrid"></div>
+    </main>
+
+    <footer>جميع الحقوق محفوظة &copy; riox ads - <span id="year"></span></footer>
+
+    <!-- تفاصيل المنتج -->
+    <div class="modal-overlay" id="detailsModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal('detailsModal')">&times;</button>
+            <div class="modal-header-info">
+                <img id="modalImg" src="" alt="">
+                <h2 id="modalTitle"></h2>
+            </div>
+            <div id="modalNotice" class="product-notice"></div>
+            <span class="duration-label">خيّر المدة:</span>
+            <div id="modalDurations" class="durations-container"></div>
+            <div class="price-display" id="modalPrice">0 DZD</div>
+            <button class="primary-btn" onclick="openCheckout()">اطلب درك</button>
+        </div>
+    </div>
+
+    <!-- تأكيد الطلب -->
+    <div class="modal-overlay" id="checkoutModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal('checkoutModal')">&times;</button>
+            <h2 style="text-align:center; margin-bottom: 10px;">تأكيد الطلب</h2>
+            <p style="text-align:center; color:#666; margin-bottom: 20px; font-size: 0.95rem;">عمر هاد المعلومات باش نكونفيرميو الطلب ديالك</p>
+            
+            <div class="form-group"><label>الاسم الكريم:</label><input type="text" id="orderName" placeholder="اكتب اسمك هنا" required></div>
+            <div class="form-group"><label>رقم الواتساب:</label><input type="tel" id="orderPhone" placeholder="مثال: 0550000000" dir="ltr" style="text-align: right;" required></div>
+            <div class="form-group"><label>الإيميل (البريد الإلكتروني):</label><input type="email" id="orderEmail" placeholder="example@gmail.com" dir="ltr" style="text-align: right;" required></div>
+            <div class="form-group hidden" id="activationGroup"><label>حساب التفعيل (الإيميل المراد تفعيله):</label><input type="email" id="orderActivationEmail" placeholder="الإيميل الذي تريد تفعيل الاشتراك فيه" dir="ltr" style="text-align: right;"></div>
+            
+            <button class="primary-btn whatsapp-btn" onclick="submitOrder()">تأكيد وإرسال الطلب 🚀</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        let storeProducts = [];
+        let storeSettings = {};
+        let activeProduct = null;
+        let currentDuration = "";
+        let currentPrice = "";
+
+        // رابط سيرفر Google Apps Script الخاص بك
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwlDxwHX48RFraHPkVsUZitrb6jzFbjkBJFVKqfSfV_84yjlWKXphybebG7Yv3Qma64/exec";
+
+        if(localStorage.getItem('riox_v') !== '5') {
+            const defaultProds = [
+                { id: 1, name: "Claude Pro", type: "شخصي", prices: {"1 شهر": 6580}, img: "images/claude_pro.png", available: true },
+                { id: 2, name: "YouTube Premium", type: "بدعوة", prices: {"1 شهر": 900, "3 شهور": 2500, "6 شهور": 4000}, img: "images/youtube_premium.png", available: true },
+                { id: 3, name: "Canva Pro", type: "شخصي", prices: {"12 شهر": 500, "عامين": 800, "3 سنين": 1200}, img: "images/canva_pro.png", available: true },
+                { id: 4, name: "CapCut Pro", type: "شخصي", prices: {"1 شهر": 1000, "6 شهور": 3800}, img: "images/capcut_pro.png", available: true },
+                { id: 5, name: "Spotify Premium", type: "بدعوة", prices: {"1 شهر": 900, "3 شهور": 2100, "6 شهور": 3800, "12 شهر": 5500}, img: "images/spotify_premium.png", available: true },
+                { id: 6, name: "ChatGPT Plus", type: "شخصي", prices: {"1 شهر": 1500}, img: "images/chatgpt_plus.png", available: true },
+                { id: 7, name: "ChatGPT Business", type: "شخصي", prices: {"1 شهر": 900}, img: "images/chatgpt_business.png", available: true },
+                { id: 8, name: "Nord VPN", type: "شخصي", prices: {"3 شهور": 2400}, img: "images/nord_vpn.png", available: true },
+                { id: 9, name: "Netflix 4K", type: "شخصي", prices: {"1 شهر": 1000, "3 شهور": 2600}, img: "images/netflix_4k.png", available: true },
+                { id: 10, name: "Prime Video", type: "شخصي", prices: {"6 شهور": 2500}, img: "images/prime_video.png", available: true },
+                { id: 11, name: "Gemini Pro", type: "بدعوة", prices: {"12 شهر": 1000, "18 شهر": 1500}, img: "images/gemini_pro.png", available: true },
+                { id: 12, name: "Snap+", type: "شخصي", prices: {"1 شهر": 800, "3 شهور": 1500, "6 شهور": 2200, "12 شهر": 2900}, img: "images/snap_plus.png", available: true },
+                { id: 13, name: "Telegram Premium", type: "شخصي", prices: {"3 شهور": 4500}, img: "images/telegram_premium.png", available: true }
+            ];
+            localStorage.setItem('riox_products', JSON.stringify(defaultProds));
+            localStorage.setItem('riox_v', '5');
+        }
+
+        function initStore() {
+            storeSettings = JSON.parse(localStorage.getItem('riox_settings'));
+            if(storeSettings && storeSettings.notice && storeSettings.notice.trim() !== "") {
+                const noticeEl = document.getElementById('storeNotice');
+                noticeEl.textContent = storeSettings.notice;
+                noticeEl.style.display = 'block';
+            }
+
+            storeProducts = JSON.parse(localStorage.getItem('riox_products')) || [];
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            
+            storeProducts.forEach(product => {
+                const firstPrice = Object.values(product.prices)[0];
+                const badgeClass = product.type === 'شخصي' ? 'badge-personal' : 'badge-invite';
+                const unavailClass = !product.available ? 'unavailable' : '';
+
+                const fallbackImg = product.name === 'ChatGPT Business' ? `onerror="this.onerror=null; this.src='images/chatgpt_plus.png';"` : '';
+
+                const cardHTML = `
+                    <div class="product-card ${unavailClass}" onclick="if(${product.available}) openDetails(${product.id})">
+                        <span class="badge ${badgeClass}">${product.type}</span>
+                        <div class="product-image-container">
+                            <img src="${product.img}" alt="${product.name}" style="${product.name === 'ChatGPT Business' ? 'filter: grayscale(100%);' : ''}" ${fallbackImg}>
+                        </div>
+                        <h3>${product.name}</h3>
+                        <span class="start-price">ابتداءً من ${firstPrice} DZD</span>
+                    </div>
+                `;
+                grid.innerHTML += cardHTML;
+            });
+        }
+
+        function openDetails(id) {
+            activeProduct = storeProducts.find(p => p.id === id);
+            if(!activeProduct) return;
+
+            document.getElementById('modalTitle').textContent = activeProduct.name;
+            const modalImg = document.getElementById('modalImg');
+            modalImg.src = activeProduct.img;
+            modalImg.style.filter = activeProduct.name === "ChatGPT Business" ? "grayscale(100%)" : "none";
+            if(activeProduct.name === "ChatGPT Business") {
+                modalImg.onerror = function() { this.onerror=null; this.src='images/chatgpt_plus.png'; };
+            }
+
+            const noticeBox = document.getElementById('modalNotice');
+            noticeBox.innerHTML = activeProduct.type === "بدعوة" 
+                ? "📍 <b>نوع الاشتراك:</b> بدعوة. سيتم إرسال رابط انضمام آمن لحسابك." 
+                : "📍 <b>نوع الاشتراك:</b> شخصي ومضمون بالكامل.";
+
+            const dContainer = document.getElementById('modalDurations');
+            dContainer.innerHTML = "";
+            let isFirst = true;
+            
+            for (const [duration, price] of Object.entries(activeProduct.prices)) {
+                const btn = document.createElement('button');
+                btn.className = `duration-btn ${isFirst ? 'active' : ''}`;
+                btn.textContent = duration;
+                
+                if(isFirst) {
+                    currentDuration = duration;
+                    currentPrice = price;
+                    document.getElementById('modalPrice').textContent = price + " DZD";
+                    isFirst = false;
+                }
+
+                btn.onclick = function() {
+                    document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentDuration = duration;
+                    currentPrice = price;
+                    document.getElementById('modalPrice').textContent = price + " DZD";
+                };
+                dContainer.appendChild(btn);
+            }
+            document.getElementById('detailsModal').classList.add('active');
+        }
+
+        function openCheckout() {
+            closeModal('detailsModal');
+            const actGroup = document.getElementById('activationGroup');
+            const actInput = document.getElementById('orderActivationEmail');
+            
+            if(activeProduct.name === "Spotify Premium" || activeProduct.name === "ChatGPT Plus") {
+                actGroup.classList.remove('hidden');
+                actInput.required = true;
+            } else {
+                actGroup.classList.add('hidden');
+                actInput.required = false;
+                actInput.value = ""; 
+            }
+            document.getElementById('checkoutModal').classList.add('active');
+        }
+
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        window.onclick = function(e) { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); }
+
+        function submitOrder() {
+            const name = document.getElementById('orderName').value.trim();
+            const phone = document.getElementById('orderPhone').value.trim();
+            const email = document.getElementById('orderEmail').value.trim();
+            const actEmail = document.getElementById('orderActivationEmail').value.trim();
+
+            if(!name || !phone || !email) {
+                alert("يرجى تعبئة الحقول الأساسية باش نأكدو الطلب ديالك."); return;
+            }
+            if(!document.getElementById('activationGroup').classList.contains('hidden') && !actEmail) {
+                alert("يرجى كتابة الإيميل المراد تفعيله."); return;
+            }
+
+            const orderId = "#RX-" + Math.floor(10000 + Math.random() * 90000);
+
+            // 1. إرسال الطلب تلقائياً إلى سيرفر Google Apps Script (الشيت + التليجرام)
+            fetch(WEB_APP_URL, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    action: "new_order",
+                    data: {
+                        name: name,
+                        phone: phone,
+                        email: email,
+                        product: activeProduct.name,
+                        duration: currentDuration,
+                        price: currentPrice,
+                        paymentMethod: "واتساب / بريدي موب",
+                        activationAccount: actEmail || "لا يوجد"
+                    }
+                })
+            }).catch(err => console.error("Error logging order:", err));
+
+            // 2. الحفظ المحلي في المتصفح
+            const newOrder = {
+                id: orderId, date: new Date().toISOString(), name: name, phone: phone, email: email, actEmail: actEmail,
+                product: activeProduct.name, type: activeProduct.type, duration: currentDuration, price: currentPrice
+            };
+            const existingOrders = JSON.parse(localStorage.getItem('riox_orders')) || [];
+            existingOrders.push(newOrder);
+            localStorage.setItem('riox_orders', JSON.stringify(existingOrders));
+
+            // 3. إطلاق حدث البيكسل
+            if(typeof fbq === 'function') fbq('track', 'Lead', { content_name: activeProduct.name, value: currentPrice, currency: 'DZD' });
+
+            // 4. فتح الواتساب للزبون
+            let msg = storeSettings.invoice_template || "";
+            msg = msg.replace(/{order_id}/g, orderId).replace(/{name}/g, name).replace(/{phone}/g, phone)
+                     .replace(/{email}/g, email).replace(/{product}/g, activeProduct.name)
+                     .replace(/{type}/g, activeProduct.type).replace(/{duration}/g, currentDuration)
+                     .replace(/{price}/g, currentPrice).replace(/{activation_account}/g, actEmail || "لا يوجد");
+
+            const waNumber = storeSettings.wa_number || "213557235850";
+            window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+            closeModal('checkoutModal');
+            
+            document.getElementById('orderName').value = '';
+            document.getElementById('orderPhone').value = '';
+            document.getElementById('orderEmail').value = '';
+            document.getElementById('orderActivationEmail').value = '';
+        }
+
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.onkeydown = function(e) {
+            if (e.keyCode === 123 || (e.ctrlKey && [85,73,74,67].includes(e.keyCode))) return false;
+        };
+
+        window.onload = initStore;
+    </script>
+</body>
+</html>
