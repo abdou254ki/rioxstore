@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- ربط ملف التنسيقات CSS -->
+    <!-- ربط ملف التنسيقات -->
     <link rel="stylesheet" href="style.css">
     
     <!-- مكتبات Firebase -->
@@ -22,7 +22,7 @@
         <div class="logo-text">Ultra Store DZ</div>
         <div id="userProfileIcon" onclick="handleProfileClick()">
             <i class="fas fa-user-circle" style="font-size: 24px;"></i>
-            <span id="userNameDisplay" style="font-size: 10px; font-weight: bold;">دخول</span>
+            <span id="userNameDisplay" style="font-size: 10px; font-weight: bold;">حسابي</span>
         </div>
     </header>
 
@@ -36,64 +36,77 @@
             <a class="side-link active" onclick="switchPage('home')"><i class="fas fa-home"></i> المتجر الرئيسي</a>
             <a class="side-link" id="navProfile" style="display:none;" onclick="switchPage('profile')"><i class="fas fa-wallet"></i> حسابي والمحفظة</a>
             <a class="side-link" onclick="switchPage('track')"><i class="fas fa-search"></i> تتبع طلبي</a>
-            <a class="side-link" onclick="switchPage('contact')"><i class="fas fa-comment-dots"></i> الدعم والتواصل</a>
-            <a class="side-link" onclick="logoutUser()" id="logoutBtn" style="display: none; color: red;"><i class="fas fa-sign-out-alt" style="color: red;"></i> تسجيل الخروج</a>
+            <a class="side-link" onclick="switchPage('contact')"><i class="fas fa-headset"></i> الدعم والتواصل</a>
+            <a class="side-link" onclick="logoutUser()" id="logoutBtn" style="display: none; color: #EF4444;"><i class="fas fa-sign-out-alt" style="color: #EF4444;"></i> تسجيل الخروج</a>
         </div>
     </div>
 
     <!-- الأقسام -->
     <div id="home-sec" class="page-sec active">
-        <h2 class="section-title">اختر اشتراكك الآن!</h2>
+        <h2 class="section-title">أفضل الاشتراكات بأسعار خيالية</h2>
         <div class="products-grid" id="productsGrid">
-            <div style="text-align:center; grid-column: 1 / -1; color: var(--primary-blue);">
-                <i class="fas fa-spinner fa-spin fa-2x"></i><br><br>جاري جلب المنتجات...
+            <div style="text-align:center; grid-column: 1 / -1; color: var(--primary-blue); padding: 50px 0;">
+                <i class="fas fa-circle-notch fa-spin fa-3x"></i><br><br><span style="font-weight:bold;">جاري تحميل المنتجات...</span>
             </div>
         </div>
     </div>
 
     <div id="profile-sec" class="page-sec">
         <div class="profile-card">
-            <i class="fas fa-user-circle" style="font-size: 60px; color: var(--text-gray); margin-bottom: 10px;"></i>
-            <h3 id="profileName" style="font-size: 1.5rem; margin-bottom: 5px;">...</h3>
-            <p id="profileEmail" style="color: var(--text-gray);"></p>
+            <i class="fas fa-user-circle" style="font-size: 70px; color: var(--primary-blue); margin-bottom: 15px;"></i>
+            <h3 id="profileName" style="font-size: 1.6rem; margin-bottom: 5px;">...</h3>
+            <p id="profileEmail" style="color: var(--text-gray); font-size: 1rem;"></p>
         </div>
         <div class="wallet-box">
-            <p style="font-size: 1.1rem; opacity: 0.9;">رصيد المحفظة الحالي</p>
+            <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 10px;">رصيد المحفظة المتاح</p>
             <div class="wallet-amount" id="walletBalanceDisplay">0 DZD</div>
-            <button class="primary-btn" style="background: white; color: var(--primary-blue); border-radius: 30px; margin-top: 15px;" onclick="openRechargeModal()">شحن المحفظة <i class="fas fa-plus-circle"></i></button>
+            <button class="primary-btn" style="background: white; color: var(--primary-blue); border-radius: 30px; margin-top: 20px; font-weight:800;" onclick="openRechargeModal()">شحن الرصيد الآن <i class="fas fa-plus-circle"></i></button>
         </div>
     </div>
 
     <div id="track-sec" class="page-sec">
         <h2 class="section-title">🔍 تتبع حالة طلبك</h2>
-        <div class="notice-box"><i class="fas fa-info-circle"></i> أدخل رقم الطلب (مثال: RX-12345)</div>
-        <div class="form-group"><input type="text" id="trackInput" placeholder="رقم الطلب..." dir="ltr"></div>
-        <button class="primary-btn" onclick="trackOrder()">استعلام <i class="fas fa-search"></i></button>
-        <div id="trackResult" style="text-align: center; margin-top: 15px; font-weight: bold;"></div>
+        <div class="notice-box" style="text-align:center;"><i class="fas fa-info-circle"></i> يرجى إدخال رقم الطلب (مثال: RX-12345) لمعرفة حالته.</div>
+        <div class="form-group"><input type="text" id="trackInput" placeholder="أدخل رقم الطلب هنا..." dir="ltr" style="text-align:center; font-size:1.2rem; letter-spacing: 2px;"></div>
+        <button class="primary-btn" onclick="trackOrder()">استعلام عن الطلب <i class="fas fa-search"></i></button>
+        <div id="trackResult" style="text-align: center; margin-top: 20px; font-size: 1.1rem; padding: 15px; border-radius: 10px; display:none;"></div>
     </div>
 
-    <div id="contact-sec" class="page-sec" style="text-align: center; max-width: 500px;">
-        <h2 class="section-title">📞 تواصل معنا</h2>
-        <a href="https://wa.me/213557235850" target="_blank" class="primary-btn whatsapp-btn" style="text-decoration:none;"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
+    <div id="contact-sec" class="page-sec" style="text-align: center; max-width: 500px; margin: 0 auto;">
+        <i class="fas fa-headset" style="font-size: 60px; color: var(--primary-blue); margin-bottom: 20px;"></i>
+        <h2 class="section-title" style="margin-top:0;">نحن هنا لمساعدتك!</h2>
+        <p style="color: var(--text-gray); margin-bottom: 25px; line-height: 1.6;">إذا كان لديك أي استفسار أو واجهت مشكلة، لا تتردد في التواصل معنا عبر الواتساب. فريق الدعم متاح للرد عليك في أقرب وقت.</p>
+        <a href="https://wa.me/213557235850" target="_blank" class="primary-btn whatsapp-btn" style="text-decoration:none; padding: 18px;"><i class="fab fa-whatsapp" style="font-size: 22px;"></i> تواصل معنا عبر واتساب</a>
     </div>
 
     <!-- النوافذ المنبثقة -->
     <div class="modal-overlay" id="authModal">
         <div class="modal-box">
             <button class="close-btn" onclick="closeModal('authModal')"><i class="fas fa-times"></i></button>
-            <h2 style="text-align:center; margin-bottom:20px; color: var(--text-dark);">حسابي في Ultra Store</h2>
+            <div style="text-align:center; margin-bottom:25px;">
+                <i class="fas fa-user-lock" style="font-size: 40px; color: var(--primary-blue); margin-bottom: 10px;"></i>
+                <h2 style="color: var(--text-dark); margin:0;">تسجيل الدخول / إنشاء حساب</h2>
+            </div>
+            
             <div id="loginForm">
                 <div class="form-group"><input type="email" id="authEmail" placeholder="البريد الإلكتروني"></div>
                 <div class="form-group"><input type="password" id="authPassword" placeholder="كلمة المرور"></div>
-                <button class="primary-btn" onclick="loginUser()">تسجيل الدخول</button>
-                <p style="text-align:center; margin-top:15px; cursor:pointer; color:var(--primary-blue); font-weight:bold;" onclick="toggleAuthMode()">لا تملك حساباً؟ أنشئ حساباً الآن</p>
+                <button class="primary-btn" onclick="loginUser()">دخول آمن <i class="fas fa-sign-in-alt"></i></button>
+                <div style="text-align:center; margin-top:20px; border-top: 1px solid var(--border-color); padding-top:15px;">
+                    <span style="color:var(--text-gray);">مستخدم جديد؟</span> 
+                    <span style="color:var(--primary-blue); font-weight:bold; cursor:pointer;" onclick="toggleAuthMode()">إنشاء حساب الآن</span>
+                </div>
             </div>
+            
             <div id="registerForm" class="hidden">
                 <div class="form-group"><input type="text" id="regName" placeholder="الاسم الكامل"></div>
                 <div class="form-group"><input type="email" id="regEmail" placeholder="البريد الإلكتروني"></div>
                 <div class="form-group"><input type="password" id="regPassword" placeholder="كلمة المرور"></div>
-                <button class="primary-btn" onclick="registerUser()">إنشاء حساب</button>
-                <p style="text-align:center; margin-top:15px; cursor:pointer; color:var(--primary-blue); font-weight:bold;" onclick="toggleAuthMode()">لديك حساب؟ سجل دخولك</p>
+                <button class="primary-btn" onclick="registerUser()">إنشاء الحساب <i class="fas fa-user-plus"></i></button>
+                <div style="text-align:center; margin-top:20px; border-top: 1px solid var(--border-color); padding-top:15px;">
+                    <span style="color:var(--text-gray);">لديك حساب مسبقاً؟</span> 
+                    <span style="color:var(--primary-blue); font-weight:bold; cursor:pointer;" onclick="toggleAuthMode()">تسجيل الدخول</span>
+                </div>
             </div>
         </div>
     </div>
@@ -101,111 +114,138 @@
     <div class="modal-overlay" id="detailsModal">
         <div class="modal-box">
             <button class="close-btn" onclick="closeModal('detailsModal')"><i class="fas fa-times"></i></button>
-            <div style="text-align:center; margin-bottom: 15px;"><img id="modalImg" src="" style="width: 80px; height: 80px; object-fit: contain; background: #F8FAFC; border-radius: 15px; padding: 10px; border: 1px solid var(--border-color);"></div>
-            <h2 id="modalTitle" style="text-align:center; color:var(--text-dark); margin-bottom:15px; font-weight: 800;"></h2>
-            <ul id="modalFeatures" class="features-list"></ul>
-            <label style="font-weight:700; color:var(--text-dark); margin-bottom: 10px; display: block;"><i class="fas fa-calendar-alt"></i> اختر المدة:</label>
+            <div style="text-align:center; margin-bottom: 15px;">
+                <img id="modalImg" src="" style="width: 100px; height: 100px; object-fit: contain; background: #F8FAFC; border-radius: 20px; padding: 15px; border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            </div>
+            <h2 id="modalTitle" style="text-align:center; color:var(--text-dark); margin-bottom:15px; font-weight: 800; font-size:1.5rem;"></h2>
+            
+            <div style="background: var(--light-blue-bg); border-radius: 12px; padding: 15px; margin-bottom: 20px;">
+                <h4 style="color:var(--primary-blue); margin-bottom:10px; font-size:1rem;"><i class="fas fa-star"></i> مميزات الاشتراك:</h4>
+                <ul id="modalFeatures" class="features-list"></ul>
+            </div>
+            
+            <label style="font-weight:700; color:var(--text-dark); margin-bottom: 12px; display: block; font-size:1.1rem;"><i class="fas fa-calendar-alt"></i> اختر باقة الاشتراك:</label>
             <div id="modalDurations" class="durations-container"></div>
+            
             <div class="qty-wrapper">
-                <span style="font-weight:bold;">الكمية:</span>
-                <div class="qty-controls" style="display: flex; gap: 10px; align-items: center;">
+                <span style="font-weight:bold; font-size:1.1rem; color:var(--text-dark);">الكمية المطلوبة:</span>
+                <div class="qty-controls" style="display: flex; gap: 15px; align-items: center; background:var(--white); padding:5px; border-radius:10px; border: 1px solid var(--border-color);">
                     <button class="qty-btn" onclick="changeQty(-1)"><i class="fas fa-minus"></i></button>
-                    <span id="qtyDisplay" style="width: 20px; text-align: center; font-weight: bold; font-size: 1.2rem;">1</span>
+                    <span id="qtyDisplay" style="width: 30px; text-align: center; font-weight: 800; font-size: 1.3rem; color:var(--primary-blue);">1</span>
                     <button class="qty-btn" onclick="changeQty(1)"><i class="fas fa-plus"></i></button>
                 </div>
             </div>
+            
+            <div style="text-align:center; color:var(--text-gray); font-size:0.9rem; margin-bottom:5px;">المبلغ الإجمالي للدفع</div>
             <div class="price-display" id="modalPrice">0 DZD</div>
-            <button class="primary-btn" onclick="openCheckout()">إكمال الطلب والدفع <i class="fas fa-arrow-left"></i></button>
+            <button class="primary-btn" style="padding:18px; font-size:1.2rem;" onclick="openCheckout()">إكمال الطلب والدفع <i class="fas fa-shopping-cart"></i></button>
         </div>
     </div>
 
     <div class="modal-overlay" id="checkoutModal">
         <div class="modal-box">
             <button class="close-btn" onclick="closeModal('checkoutModal')"><i class="fas fa-times"></i></button>
-            <h2 style="text-align:center; margin-bottom:20px; color: var(--text-dark); font-weight: 800;">إكمال الطلب والدفع</h2>
-            <div class="notice-box">المبلغ الإجمالي: <strong id="checkoutTotalDisplay" style="font-size: 1.2rem;">0 DZD</strong></div>
+            <h2 style="text-align:center; margin-bottom:20px; color: var(--text-dark); font-weight: 800;"><i class="fas fa-cash-register"></i> إتمام عملية الدفع</h2>
             
-            <!-- حقول معلومات الزبون المسترجعة -->
-            <div id="guestInfoForm" class="hidden">
-                <div class="form-group"><input type="text" id="orderGuestName" placeholder="الاسم الكامل (اختياري)"></div>
-                <div class="form-group"><input type="email" id="orderGuestEmail" placeholder="البريد الإلكتروني لاستلام الحساب"></div>
+            <div style="background: #F8FAFC; border: 1px solid var(--border-color); border-radius: 12px; padding: 15px; margin-bottom: 20px; text-align:center;">
+                <span style="color:var(--text-gray); font-size:0.95rem;">المبلغ المستحق:</span><br>
+                <strong id="checkoutTotalDisplay" style="font-size: 1.6rem; color:var(--primary-blue);">0 DZD</strong>
             </div>
-            <div class="form-group"><input type="tel" id="orderPhone" placeholder="رقم الواتساب الخاص بك (إجباري)"></div>
+            
+            <!-- معلومات الزبون (تظهر إذا كان زائراً) -->
+            <div id="guestInfoForm" class="hidden" style="background: var(--light-blue-bg); padding:15px; border-radius:12px; margin-bottom:20px; border: 1px dashed var(--primary-blue);">
+                <p style="text-align:center; font-size:0.9rem; color:var(--primary-blue); font-weight:bold; margin-bottom:15px;"><i class="fas fa-info-circle"></i> أنت تطلب كزائر. يرجى إدخال بيانات الاستلام:</p>
+                <div class="form-group"><input type="text" id="orderGuestName" placeholder="الاسم الكامل (اختياري)"></div>
+                <div class="form-group" style="margin-bottom:0;"><input type="email" id="orderGuestEmail" placeholder="البريد الإلكتروني لاستلام الاشتراك (مهم جداً)"></div>
+            </div>
+            
+            <div class="form-group"><input type="tel" id="orderPhone" placeholder="رقم الواتساب الخاص بك (إجباري للتواصل)" style="border-color:var(--primary-blue); border-width:2px;"></div>
             
             <div class="form-group">
-                <label>اختر طريقة الدفع:</label>
-                <select id="payMethod" onchange="togglePaymentInfo()">
-                    <option value="none">-- اختر طريقة الدفع --</option>
-                    <option value="Wallet">رصيد المحفظة (خصم مباشر)</option>
-                    <option value="Chargily">البطاقة الذهبية / CIB (دفع آلي)</option>
-                    <option value="Binance">بينانس (Binance Pay)</option>
-                    <option value="Bybit">باي بت (Bybit)</option>
-                    <option value="BaridiMob">بريدي موب (تحويل يدوي)</option>
+                <label style="font-size:1.1rem;"><i class="fas fa-money-check-alt"></i> اختر طريقة الدفع المناسبة:</label>
+                <select id="payMethod" onchange="togglePaymentInfo()" style="padding:15px; font-weight:bold; font-size:1rem; cursor:pointer;">
+                    <option value="none">-- اضغط لاختيار طريقة الدفع --</option>
+                    <option value="Wallet">💳 الدفع من رصيد المحفظة (فوري)</option>
+                    <option value="BaridiMob">🏦 بريدي موب (تحويل بنكي)</option>
+                    <option value="Binance">🟡 بينانس (Binance Pay)</option>
+                    <option value="Bybit">⚫ باي بت (Bybit)</option>
+                    <option value="Chargily">💳 البطاقة الذهبية / CIB (دفع آلي)</option>
                 </select>
             </div>
             
+            <!-- أقسام الدفع (تظهر وتختفي) -->
             <div id="walletSection" class="hidden">
-                <div class="notice-box" style="text-align:center; font-weight: bold; background: #e8f5e9; color: var(--success); border-color: var(--success);">
-                    رصيدك الحالي: <span id="checkoutWalletBalance">0</span> DZD
+                <div class="notice-box" style="text-align:center; font-weight: bold; background: #e8f5e9; color: var(--success); border-color: var(--success); font-size:1.1rem; padding:15px;">
+                    رصيدك الحالي يكفي للدفع: <br><span id="checkoutWalletBalance" style="font-size:1.5rem;">0</span> DZD
                 </div>
-                <button class="primary-btn" onclick="payWithWallet()" id="walletSubmitBtn" style="background: var(--text-dark);">
-                    الدفع من المحفظة وتأكيد الطلب <i class="fas fa-wallet"></i>
+                <button class="primary-btn" onclick="payWithWallet()" id="walletSubmitBtn" style="background: var(--text-dark); padding:18px;">
+                    تأكيد الدفع من المحفظة <i class="fas fa-check-circle"></i>
                 </button>
             </div>
 
             <div id="chargilySection" class="hidden">
-                <button class="primary-btn cib-btn" onclick="payWithChargily()" id="chargilySubmitBtn">
-                    إكمال الدفع بـ البطاقة الذهبية / CIB <i class="fas fa-credit-card"></i>
+                <div class="notice-box" style="background:#FFF3E0; border-color:#FF9800; color:#E65100; text-align:center;">
+                    <i class="fas fa-exclamation-triangle"></i> ملاحظة: الدفع بالبطاقة الذهبية قد يستغرق بضع ثوانٍ للتحويل.
+                </div>
+                <button class="primary-btn cib-btn" onclick="payWithChargily()" id="chargilySubmitBtn" style="padding:18px;">
+                    الانتقال لدفع بـ البطاقة الذهبية / CIB <i class="fas fa-credit-card"></i>
                 </button>
             </div>
 
             <div id="manualPaymentDetails" class="hidden">
-                <div class="notice-box" id="payInstructions" style="direction:ltr; text-align:center; font-size:1.1rem;"></div>
-                <label class="file-upload" onclick="document.getElementById('receiptFile').click()">
-                    <i class="fas fa-cloud-upload-alt" style="font-size: 24px; margin-bottom: 10px; display: block;"></i> اضغط لرفع صورة وصل الدفع
-                    <input type="file" id="receiptFile" accept="image/*" style="display:none;" onchange="handleFileUpload(event)">
-                </label>
-                <div id="uploadStatus" style="text-align:center; color:var(--success); font-weight:bold; margin-bottom:15px;"></div>
-                <button class="primary-btn whatsapp-btn" onclick="submitManualOrder()" id="submitBtn">إرسال الطلب للمراجعة <i class="fas fa-check"></i></button>
+                <div style="background: var(--bg-color); border: 2px dashed #CBD5E1; border-radius: 12px; padding: 20px; margin-bottom: 20px;">
+                    <div id="payInstructions" style="direction:ltr; text-align:center; font-size:1.2rem; margin-bottom:15px; line-height:1.6;"></div>
+                    <label class="file-upload" onclick="document.getElementById('receiptFile').click()" style="margin:0; background:white; transition:0.3s;">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 30px; margin-bottom: 10px; display: block; color:var(--primary-blue);"></i> 
+                        <span style="font-size:1.1rem;">اضغط هنا لرفع صورة وصل الدفع (Capture)</span>
+                        <input type="file" id="receiptFile" accept="image/*" style="display:none;" onchange="handleFileUpload(event)">
+                    </label>
+                </div>
+                <div id="uploadStatus" style="text-align:center; color:var(--success); font-weight:bold; margin-bottom:15px; font-size:1.1rem;"></div>
+                <button class="primary-btn whatsapp-btn" onclick="submitManualOrder()" id="submitBtn" style="padding:18px; font-size:1.2rem;">إرسال الطلب للمراجعة <i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
 
-    <!-- نافذة شحن المحفظة والنجاح (نفس الكود السابق تم الحفاظ عليه) -->
+    <!-- نافذة شحن المحفظة -->
     <div class="modal-overlay" id="rechargeModal">
         <div class="modal-box">
             <button class="close-btn" onclick="closeModal('rechargeModal')"><i class="fas fa-times"></i></button>
-            <h2 style="text-align:center; margin-bottom:20px; font-weight: 800;">شحن المحفظة</h2>
-            <div class="form-group"><input type="number" id="rechargeAmount" placeholder="أدخل المبلغ المراد شحنه (DZD)"></div>
+            <h2 style="text-align:center; margin-bottom:25px; font-weight: 800; color:var(--primary-blue);"><i class="fas fa-wallet"></i> شحن رصيد المحفظة</h2>
             <div class="form-group">
-                <label>طريقة الدفع:</label>
-                <select id="rechargeMethod" onchange="toggleRechargeInfo()">
-                    <option value="none">-- اختر طريقة الدفع --</option>
+                <label style="font-weight:bold; margin-bottom:8px; display:block;">المبلغ المراد شحنه (بالدينار الجزائري):</label>
+                <input type="number" id="rechargeAmount" placeholder="مثال: 2000" style="font-size:1.2rem; text-align:center; font-weight:bold;">
+            </div>
+            <div class="form-group">
+                <label style="font-weight:bold; margin-bottom:8px; display:block;">اختر طريقة الدفع للتحويل:</label>
+                <select id="rechargeMethod" onchange="toggleRechargeInfo()" style="padding:15px; font-size:1.1rem;">
+                    <option value="none">-- اختر --</option>
+                    <option value="BaridiMob">بريدي موب (BaridiMob)</option>
                     <option value="Binance">بينانس (Binance Pay)</option>
-                    <option value="BaridiMob">بريدي موب</option>
+                    <option value="Bybit">باي بت (Bybit)</option>
                 </select>
             </div>
             <div id="rechargeManualDetails" class="hidden">
-                <div class="notice-box" id="rechargeInstructions" style="direction:ltr; text-align:center;"></div>
+                <div class="notice-box" id="rechargeInstructions" style="direction:ltr; text-align:center; font-size:1.1rem; line-height:1.5;"></div>
                 <label class="file-upload" onclick="document.getElementById('rechargeReceiptFile').click()">
-                    <i class="fas fa-cloud-upload-alt" style="font-size: 24px; margin-bottom: 10px; display: block;"></i> رفع وصل التحويل
+                    <i class="fas fa-image" style="font-size: 24px; margin-bottom: 10px; display: block;"></i> أرفق صورة وصل التحويل
                     <input type="file" id="rechargeReceiptFile" accept="image/*" style="display:none;" onchange="handleRechargeUpload(event)">
                 </label>
                 <div id="rechargeUploadStatus" style="text-align:center; color:var(--success); font-weight:bold; margin-bottom:15px;"></div>
-                <button class="primary-btn" onclick="submitRechargeRequest()" id="rechargeBtn">إرسال طلب الشحن</button>
+                <button class="primary-btn" onclick="submitRechargeRequest()" id="rechargeBtn" style="padding:15px;">إرسال طلب الشحن <i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
 
+    <!-- نافذة النجاح -->
     <div class="modal-overlay" id="successModal">
-        <div class="modal-box" style="text-align:center;">
-            <button class="close-btn" onclick="closeModal('successModal')"><i class="fas fa-times"></i></button>
-            <div style="width: 80px; height: 80px; background: #e8f5e9; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px;">
-                <i class="fas fa-check" style="font-size: 40px; color: var(--success);"></i>
+        <div class="modal-box" style="text-align:center; padding: 40px 20px;">
+            <div style="width: 100px; height: 100px; background: #e8f5e9; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 25px; border: 4px solid var(--success);">
+                <i class="fas fa-check" style="font-size: 50px; color: var(--success);"></i>
             </div>
-            <h2 style="color:var(--success); margin-bottom:15px; font-weight: 800;" id="successTitle">تمت العملية بنجاح!</h2>
-            <p style="margin-bottom:20px; color: var(--text-gray);" id="successMsg"></p>
-            <button class="primary-btn" onclick="closeModal('successModal'); switchPage('home');">حسناً، متابعة</button>
+            <h2 style="color:var(--text-dark); margin-bottom:15px; font-weight: 800; font-size:1.8rem;" id="successTitle">تمت العملية بنجاح!</h2>
+            <p style="margin-bottom:30px; color: var(--text-gray); font-size:1.1rem; line-height:1.6;" id="successMsg"></p>
+            <button class="primary-btn" style="border-radius:30px; font-size:1.2rem;" onclick="closeModal('successModal'); switchPage('home');">العودة للمتجر</button>
         </div>
     </div>
 
