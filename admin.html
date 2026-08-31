@@ -3,14 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra Store DZ | لوحة التحكم الإدارية المتطورة</title>
+    <title>Ultra Store DZ | لوحة الإدارة الشاملة</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- ربط ملف التنسيقات -->
     <link rel="stylesheet" href="admin.css">
     
-    <!-- مكتبات Firebase -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
@@ -20,105 +17,100 @@
     <div class="container" id="appContent" style="display:none;">
         <header>
             <div class="header-title">
-                <h1><i class="fas fa-user-shield"></i> لوحة التحكم الإدارية | Ultra Store</h1>
+                <h1><i class="fas fa-crown"></i> إدارة Ultra Store</h1>
                 <span id="adminEmail" class="admin-badge"></span>
             </div>
-            <button class="btn btn-danger" onclick="logoutAdmin()"><i class="fas fa-sign-out-alt"></i> تسجيل الخروج</button>
+            <button class="btn btn-danger" onclick="logoutAdmin()"><i class="fas fa-power-off"></i> خروج</button>
         </header>
 
         <div class="tabs">
-            <button class="tab-btn active" onclick="openTab('ordersTab', this)"><i class="fas fa-shopping-bag"></i> الطلبات</button>
-            <button class="tab-btn" onclick="openTab('rechargesTab', this)"><i class="fas fa-hand-holding-usd"></i> طلبات الشحن</button>
-            <button class="tab-btn" onclick="openTab('usersTab', this)"><i class="fas fa-users"></i> العملاء والمحافظ</button>
-            <button class="tab-btn" onclick="openTab('productsTab', this)"><i class="fas fa-box-open"></i> إدارة المنتجات</button>
+            <button class="tab-btn active" onclick="openTab('ordersTab', this)"><i class="fas fa-shopping-cart"></i> الطلبات</button>
+            <button class="tab-btn" onclick="openTab('rechargesTab', this)"><i class="fas fa-money-bill-wave"></i> شحن المحافظ</button>
+            <button class="tab-btn" onclick="openTab('usersTab', this)"><i class="fas fa-users"></i> الزبائن والمحافظ</button>
+            <button class="tab-btn" onclick="openTab('productsTab', this)"><i class="fas fa-box"></i> المنتجات والفئات</button>
+            <button class="tab-btn" onclick="openTab('promoTab', this)"><i class="fas fa-tags"></i> أكواد الخصم</button>
         </div>
 
-        <!-- 1. قسم الطلبات -->
         <div id="ordersTab" class="tab-content active">
-            <h2><i class="fas fa-list-alt"></i> طلبات العملاء الواردة</h2>
+            <h2><i class="fas fa-clipboard-list"></i> جميع الطلبات</h2>
             <div class="table-responsive">
                 <table>
-                    <thead><tr><th>رقم الطلب</th><th>بيانات العميل</th><th>المنتج (المدة - الكمية)</th><th>المبلغ</th><th>الدفع</th><th>الوصل</th><th>الحالة</th><th>إجراءات</th></tr></thead>
+                    <thead><tr><th>الرقم</th><th>الزبون (الاسم/الإيميل/رقم)</th><th>المنتج المطلوب</th><th>الدفع والمبلغ</th><th>الوصل</th><th>الحالة</th><th>إجراء</th></tr></thead>
                     <tbody id="ordersTableBody"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 2. قسم طلبات الشحن (المحفظة) -->
         <div id="rechargesTab" class="tab-content">
-            <h2><i class="fas fa-wallet"></i> طلبات شحن محافظ العملاء</h2>
+            <h2><i class="fas fa-wallet"></i> طلبات الشحن</h2>
             <div class="table-responsive">
                 <table>
-                    <thead><tr><th>التاريخ</th><th>إيميل العميل</th><th>المبلغ (DZD)</th><th>الطريقة</th><th>الوصل</th><th>الحالة</th><th>إجراء</th></tr></thead>
+                    <thead><tr><th>التاريخ</th><th>إيميل الزبون</th><th>المبلغ المطلوب</th><th>طريقة الدفع</th><th>الوصل</th><th>إجراء</th></tr></thead>
                     <tbody id="rechargesTableBody"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 3. قسم العملاء والمحافظ -->
         <div id="usersTab" class="tab-content">
-            <h2><i class="fas fa-users-cog"></i> قاعدة بيانات العملاء</h2>
+            <h2><i class="fas fa-users-cog"></i> إدارة المحافظ (إضافة رصيد)</h2>
             <div class="table-responsive">
                 <table>
-                    <thead><tr><th>ID</th><th>الاسم</th><th>البريد الإلكتروني</th><th>رصيد المحفظة (DZD)</th><th>تعديل الرصيد</th></tr></thead>
+                    <thead><tr><th>المعرف</th><th>الاسم الكامل</th><th>البريد</th><th>الرصيد الحالي</th><th>تعديل</th></tr></thead>
                     <tbody id="usersTableBody"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 4. قسم المنتجات -->
         <div id="productsTab" class="tab-content">
             <div class="action-header">
-                <h2><i class="fas fa-plus-circle"></i> إضافة منتج جديد يدوياً</h2>
-                <button class="btn btn-primary" onclick="injectAllProducts()"><i class="fas fa-magic"></i> ضخ المنتجات الافتراضية دفعة واحدة</button>
+                <h2><i class="fas fa-plus"></i> إضافة منتج جديد</h2>
+                <button class="btn btn-success" style="font-size:1.1rem; padding:12px 20px;" onclick="injectAllProducts()"><i class="fab fa-github"></i> جلب و ضخ المنتجات من GitHub</button>
             </div>
-            
             <div class="card add-product-card">
                 <div class="form-grid">
-                    <div class="form-group">
-                        <label>معرف المنتج (إنجليزي بدون مسافات، مثال: netflix-4k)</label>
-                        <input type="text" id="prodId" placeholder="netflix-4k">
-                    </div>
-                    <div class="form-group">
-                        <label>اسم المنتج</label>
-                        <input type="text" id="prodName" placeholder="Netflix 4K">
-                    </div>
-                    <div class="form-group">
-                        <label>رابط الشعار أو الصورة</label>
-                        <input type="text" id="prodImage" placeholder="https://...">
-                    </div>
-                    <div class="form-group">
-                        <label>المميزات (ميزة في كل سطر)</label>
-                        <textarea id="prodFeatures" rows="3" placeholder="مشاهدة بدقة 4K&#10;شاشة خاصة&#10;ضمان كامل"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>خيارات المدة والسعر (المدة:السعر في كل سطر)</label>
-                        <textarea id="prodOptions" rows="3" placeholder="1 شهر:1000&#10;3 شهور:2600"></textarea>
-                    </div>
+                    <div class="form-group"><label>معرف المنتج</label><input type="text" id="prodId" placeholder="netflix"></div>
+                    <div class="form-group"><label>الاسم</label><input type="text" id="prodName" placeholder="Netflix"></div>
+                    <div class="form-group"><label>رابط الصورة</label><input type="text" id="prodImage" placeholder="https://..."></div>
+                    <div class="form-group"><label>المميزات (سطر بسطر)</label><textarea id="prodFeatures" rows="3"></textarea></div>
+                    <div class="form-group"><label>الخيارات (المدة:السعر)</label><textarea id="prodOptions" rows="3"></textarea></div>
                 </div>
-                <button class="btn btn-success" style="width: 100%; margin-top: 15px;" onclick="addManualProduct()"><i class="fas fa-save"></i> حفظ وإضافة المنتج للمتجر</button>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 15px;" onclick="addManualProduct()"><i class="fas fa-save"></i> حفظ المنتج</button>
             </div>
-
-            <h2 style="margin-top: 30px;"><i class="fas fa-boxes"></i> المنتجات الحالية في النظام</h2>
+            <h2 style="margin-top: 30px;"><i class="fas fa-list"></i> المنتجات المتوفرة</h2>
             <div class="table-responsive">
                 <table>
-                    <thead><tr><th>المنتج</th><th>صورة</th><th>خيارات التسعير</th><th>إجراء</th></tr></thead>
+                    <thead><tr><th>المنتج</th><th>صورة</th><th>الخيارات والأسعار</th><th>حذف</th></tr></thead>
                     <tbody id="productsTableBody"></tbody>
                 </table>
             </div>
         </div>
+
+        <!-- قسم أكواد الخصم الجديد -->
+        <div id="promoTab" class="tab-content">
+            <h2><i class="fas fa-ticket-alt"></i> إنشاء أكواد برومو (Promo Codes)</h2>
+            <div class="card" style="margin-bottom: 20px; display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end;">
+                <div class="form-group" style="margin:0; flex:1; text-align:right;"><label>الكود</label><input type="text" id="promoCodeStr" placeholder="ULTRA20"></div>
+                <div class="form-group" style="margin:0; flex:1; text-align:right;"><label>قيمة الخصم (DZD)</label><input type="number" id="promoCodeVal" placeholder="500"></div>
+                <button class="btn btn-primary" style="padding:16px;" onclick="addPromoCode()">إضافة الكود</button>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead><tr><th>الكود</th><th>الخصم (DZD)</th><th>الحالة</th><th>حذف</th></tr></thead>
+                    <tbody id="promoTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 
-    <!-- نافذة عرض صورة الوصل -->
+    <!-- Modal الصورة -->
     <div class="modal" id="imageModal" onclick="this.classList.remove('active')">
         <div class="modal-content" onclick="event.stopPropagation()">
-            <h3>صورة المرفق</h3>
-            <img id="modalImg" src="" style="width:100%; border-radius:10px; margin-top:15px; max-height: 70vh; object-fit: contain;">
+            <img id="modalImg" src="" style="width:100%; border-radius:15px; margin-top:10px; max-height: 80vh; object-fit: contain;">
             <button class="btn btn-danger" style="margin-top:15px; width:100%;" onclick="document.getElementById('imageModal').classList.remove('active')">إغلاق</button>
         </div>
     </div>
 
-    <!-- ربط ملف الجافاسكريبت -->
     <script src="admin.js"></script>
 </body>
 </html>
