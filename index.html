@@ -3,375 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Riox Ads | الاشتراكات الرقمية</title>
+    <title>Ultra Store DZ | متجر الاشتراكات الرقمية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <style>
-        :root { --primary: #0084ff; --dark: #2c3e50; --bg: #f4f7f9; --white: #fff; --success: #28a745; --gray: #e1e8ed; }
-        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--dark); display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
-        
-        header { background: linear-gradient(135deg, var(--primary), #005bb5); color: var(--white); padding: 20px 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0, 132, 255, 0.2); border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; position: sticky; top: 0; z-index: 100;}
-        .menu-btn { font-size: 24px; background: none; border: none; color: white; cursor: pointer; }
-        .logo-text { font-weight: 800; font-size: 1.5rem; letter-spacing: 1px; }
-        
-        .sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); opacity: 0; visibility: hidden; transition: 0.3s; z-index: 999; }
-        .sidebar { position: fixed; top: 0; right: -280px; width: 260px; height: 100%; background: var(--white); z-index: 1000; transition: 0.4s ease; padding: 30px 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.1); }
-        .sidebar.active { right: 0; }
-        .sidebar-overlay.active { opacity: 1; visibility: visible; }
-        .side-link { display: block; padding: 15px; margin-bottom: 10px; font-weight: 700; color: #555; text-decoration: none; border-radius: 10px; cursor: pointer; transition: 0.2s; }
-        .side-link:hover, .side-link.active { background: rgba(0, 132, 255, 0.1); color: var(--primary); }
-
-        .page-sec { display: none; padding: 20px 15px; max-width: 1000px; margin: 0 auto; width: 100%; flex: 1; animation: fadeIn 0.4s ease; }
-        .page-sec.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .section-title { text-align: center; font-size: 1.4rem; font-weight: 700; margin-bottom: 20px; }
-        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        @media (min-width: 768px) { .products-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
-        .product-card { background: var(--white); border-radius: 12px; padding: 12px; text-align: center; position: relative; box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer; transition: 0.2s; }
-        .product-card:active { transform: scale(0.96); }
-        .product-image-container { width: 100%; aspect-ratio: 1; background: #f8f9fa; border-radius: 8px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
-        .product-image-container img { width: 75%; height: 75%; object-fit: contain; }
-        .badge { position: absolute; top: -5px; right: -5px; padding: 4px 10px; border-radius: 20px; color: var(--white); font-size: 0.75rem; font-weight: 700; }
-        
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 10000; padding: 15px; }
-        .modal-overlay.active { display: flex; }
-        .modal-box { background: var(--white); width: 100%; max-width: 450px; border-radius: 20px; padding: 25px 20px; position: relative; max-height: 90vh; overflow-y: auto; }
-        .close-btn { position: absolute; top: 15px; left: 15px; background: #f1f1f1; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; }
-        
-        .durations-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
-        .duration-btn { flex: 1; min-width: calc(50% - 5px); padding: 10px; background: var(--white); border: 2px solid var(--gray); border-radius: 10px; font-weight: 700; cursor: pointer; }
-        .duration-btn.active { border-color: var(--primary); background: rgba(0,132,255,0.08); color: var(--primary); }
-        
-        .price-display { text-align: center; font-size: 1.8rem; font-weight: 800; color: var(--dark); margin-bottom: 15px; direction: ltr; }
-        .form-group { margin-bottom: 15px; text-align: right; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.9rem; }
-        .form-group input, .form-group select { width: 100%; padding: 12px; border: 1px solid var(--gray); border-radius: 10px; font-family: inherit; font-size: 1rem; outline: none; }
-        .notice-box { background: #e3f2fd; border-right: 4px solid var(--primary); padding: 12px; border-radius: 8px; font-size: 0.9rem; margin-bottom: 15px; font-weight: 600; }
-        
-        .primary-btn { width: 100%; background: var(--primary); color: var(--white); border: none; padding: 15px; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; font-family: inherit; }
-        .whatsapp-btn { background: #25D366; margin-bottom: 10px; }
-        .hidden { display: none !important; }
-        .file-upload { border: 2px dashed var(--gray); padding: 15px; text-align: center; border-radius: 10px; cursor: pointer; background: #fdfdfd; margin-bottom: 15px; display: block; }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ربط ملف التنسيقات CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- مكتبات Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 
     <header>
-        <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-        <div class="logo-text">riox ads</div>
-        <div style="width:24px;"></div> 
+        <button class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+        <div class="logo-text">Ultra Store DZ</div>
+        <div id="userProfileIcon" onclick="handleProfileClick()">
+            <i class="fas fa-user-circle" style="font-size: 24px;"></i>
+            <span id="userNameDisplay" style="font-size: 10px; font-weight: bold;">دخول</span>
+        </div>
     </header>
 
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     <div class="sidebar" id="sidebar">
-        <h2 style="color:var(--primary); margin-bottom: 20px;">القائمة</h2>
-        <a class="side-link active" onclick="switchPage('home')">🏠 المتجر الرئيسي</a>
-        <a class="side-link" onclick="switchPage('track')">🔍 تتبع طلبي</a>
-        <a class="side-link" onclick="switchPage('contact')">💬 الدعم والتواصل</a>
+        <div class="sidebar-header">
+            <h2>القائمة</h2>
+            <button class="close-menu-btn" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-menu">
+            <a class="side-link active" onclick="switchPage('home')"><i class="fas fa-home"></i> المتجر الرئيسي</a>
+            <a class="side-link" id="navProfile" style="display:none;" onclick="switchPage('profile')"><i class="fas fa-wallet"></i> حسابي والمحفظة</a>
+            <a class="side-link" onclick="switchPage('track')"><i class="fas fa-search"></i> تتبع طلبي</a>
+            <a class="side-link" onclick="switchPage('contact')"><i class="fas fa-comment-dots"></i> الدعم والتواصل</a>
+            <a class="side-link" onclick="logoutUser()" id="logoutBtn" style="display: none; color: red;"><i class="fas fa-sign-out-alt" style="color: red;"></i> تسجيل الخروج</a>
+        </div>
     </div>
 
-    <!-- 1. المتجر -->
+    <!-- الأقسام -->
     <div id="home-sec" class="page-sec active">
         <h2 class="section-title">اختر اشتراكك الآن!</h2>
-        <div class="products-grid" id="productsGrid"></div>
+        <div class="products-grid" id="productsGrid">
+            <div style="text-align:center; grid-column: 1 / -1; color: var(--primary-blue);">
+                <i class="fas fa-spinner fa-spin fa-2x"></i><br><br>جاري جلب المنتجات...
+            </div>
+        </div>
     </div>
 
-    <!-- 2. تتبع الطلب -->
+    <div id="profile-sec" class="page-sec">
+        <div class="profile-card">
+            <i class="fas fa-user-circle" style="font-size: 60px; color: var(--text-gray); margin-bottom: 10px;"></i>
+            <h3 id="profileName" style="font-size: 1.5rem; margin-bottom: 5px;">...</h3>
+            <p id="profileEmail" style="color: var(--text-gray);"></p>
+        </div>
+        <div class="wallet-box">
+            <p style="font-size: 1.1rem; opacity: 0.9;">رصيد المحفظة الحالي</p>
+            <div class="wallet-amount" id="walletBalanceDisplay">0 DZD</div>
+            <button class="primary-btn" style="background: white; color: var(--primary-blue); border-radius: 30px; margin-top: 15px;" onclick="openRechargeModal()">شحن المحفظة <i class="fas fa-plus-circle"></i></button>
+        </div>
+    </div>
+
     <div id="track-sec" class="page-sec">
         <h2 class="section-title">🔍 تتبع حالة طلبك</h2>
-        <div class="notice-box">أدخل رقم الطلب للبحث المباشر في قاعدة البيانات.</div>
-        <div class="form-group"><input type="text" id="trackInput" placeholder="مثال: RX-86278" dir="ltr" style="text-align:center;"></div>
-        <button class="primary-btn" onclick="trackOrder()" id="trackBtn">استعلام</button>
-        <div id="trackResult" style="margin-top: 20px; text-align: center; font-weight: bold; font-size: 1.1rem; background: #fff; padding: 15px; border-radius: 10px; display: none;"></div>
+        <div class="notice-box"><i class="fas fa-info-circle"></i> أدخل رقم الطلب (مثال: RX-12345)</div>
+        <div class="form-group"><input type="text" id="trackInput" placeholder="رقم الطلب..." dir="ltr"></div>
+        <button class="primary-btn" onclick="trackOrder()">استعلام <i class="fas fa-search"></i></button>
+        <div id="trackResult" style="text-align: center; margin-top: 15px; font-weight: bold;"></div>
     </div>
 
-    <!-- 3. الدعم -->
-    <div id="contact-sec" class="page-sec" style="text-align: center;">
+    <div id="contact-sec" class="page-sec" style="text-align: center; max-width: 500px;">
         <h2 class="section-title">📞 تواصل معنا</h2>
-        <p style="margin-bottom: 20px; color: #555;">طرق استخدام الموقع والتواصل مع الدعم الفني لحل المشاكل.</p>
-        <a href="https://wa.me/213557235850" target="_blank" class="primary-btn whatsapp-btn" style="display:block; text-decoration:none;">📱 واتساب الدعم</a><br>
-        <a href="mailto:support@rioxstore.shop" class="primary-btn" style="display:block; text-decoration:none; background:#333;">✉️ support@rioxstore.shop</a>
+        <a href="https://wa.me/213557235850" target="_blank" class="primary-btn whatsapp-btn" style="text-decoration:none;"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
     </div>
 
-    <!-- Modal: تفاصيل -->
+    <!-- النوافذ المنبثقة -->
+    <div class="modal-overlay" id="authModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal('authModal')"><i class="fas fa-times"></i></button>
+            <h2 style="text-align:center; margin-bottom:20px; color: var(--text-dark);">حسابي في Ultra Store</h2>
+            <div id="loginForm">
+                <div class="form-group"><input type="email" id="authEmail" placeholder="البريد الإلكتروني"></div>
+                <div class="form-group"><input type="password" id="authPassword" placeholder="كلمة المرور"></div>
+                <button class="primary-btn" onclick="loginUser()">تسجيل الدخول</button>
+                <p style="text-align:center; margin-top:15px; cursor:pointer; color:var(--primary-blue); font-weight:bold;" onclick="toggleAuthMode()">لا تملك حساباً؟ أنشئ حساباً الآن</p>
+            </div>
+            <div id="registerForm" class="hidden">
+                <div class="form-group"><input type="text" id="regName" placeholder="الاسم الكامل"></div>
+                <div class="form-group"><input type="email" id="regEmail" placeholder="البريد الإلكتروني"></div>
+                <div class="form-group"><input type="password" id="regPassword" placeholder="كلمة المرور"></div>
+                <button class="primary-btn" onclick="registerUser()">إنشاء حساب</button>
+                <p style="text-align:center; margin-top:15px; cursor:pointer; color:var(--primary-blue); font-weight:bold;" onclick="toggleAuthMode()">لديك حساب؟ سجل دخولك</p>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="detailsModal">
         <div class="modal-box">
-            <button class="close-btn" onclick="closeModal('detailsModal')">&times;</button>
-            <h2 id="modalTitle" style="text-align:center; margin-bottom: 15px; color:var(--primary);"></h2>
-            <div id="modalNotice" class="notice-box"></div>
-            
-            <label style="font-weight:700;">خيّر المدة:</label>
+            <button class="close-btn" onclick="closeModal('detailsModal')"><i class="fas fa-times"></i></button>
+            <div style="text-align:center; margin-bottom: 15px;"><img id="modalImg" src="" style="width: 80px; height: 80px; object-fit: contain; background: #F8FAFC; border-radius: 15px; padding: 10px; border: 1px solid var(--border-color);"></div>
+            <h2 id="modalTitle" style="text-align:center; color:var(--text-dark); margin-bottom:15px; font-weight: 800;"></h2>
+            <ul id="modalFeatures" class="features-list"></ul>
+            <label style="font-weight:700; color:var(--text-dark); margin-bottom: 10px; display: block;"><i class="fas fa-calendar-alt"></i> اختر المدة:</label>
             <div id="modalDurations" class="durations-container"></div>
-
+            <div class="qty-wrapper">
+                <span style="font-weight:bold;">الكمية:</span>
+                <div class="qty-controls" style="display: flex; gap: 10px; align-items: center;">
+                    <button class="qty-btn" onclick="changeQty(-1)"><i class="fas fa-minus"></i></button>
+                    <span id="qtyDisplay" style="width: 20px; text-align: center; font-weight: bold; font-size: 1.2rem;">1</span>
+                    <button class="qty-btn" onclick="changeQty(1)"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
             <div class="price-display" id="modalPrice">0 DZD</div>
-            <button class="primary-btn" onclick="openCheckout()">اطلب درك 🚀</button>
+            <button class="primary-btn" onclick="openCheckout()">إكمال الطلب والدفع <i class="fas fa-arrow-left"></i></button>
         </div>
     </div>
 
-    <!-- Modal: الدفع -->
     <div class="modal-overlay" id="checkoutModal">
         <div class="modal-box">
-            <button class="close-btn" onclick="closeModal('checkoutModal')">&times;</button>
-            <h2 style="text-align:center; margin-bottom: 15px;">تأكيد الطلب</h2>
+            <button class="close-btn" onclick="closeModal('checkoutModal')"><i class="fas fa-times"></i></button>
+            <h2 style="text-align:center; margin-bottom:20px; color: var(--text-dark); font-weight: 800;">إكمال الطلب والدفع</h2>
+            <div class="notice-box">المبلغ الإجمالي: <strong id="checkoutTotalDisplay" style="font-size: 1.2rem;">0 DZD</strong></div>
             
-            <div class="form-group"><input type="text" id="orderName" placeholder="الاسم الكريم" required></div>
-            <div class="form-group"><input type="tel" id="orderPhone" placeholder="رقم الهاتف" required></div>
-            
-            <div class="form-group" id="emailGroup">
-                <label id="emailLabel">الإيميل:</label>
-                <input type="email" id="orderEmail" placeholder="example@gmail.com" required>
+            <!-- حقول معلومات الزبون المسترجعة -->
+            <div id="guestInfoForm" class="hidden">
+                <div class="form-group"><input type="text" id="orderGuestName" placeholder="الاسم الكامل (اختياري)"></div>
+                <div class="form-group"><input type="email" id="orderGuestEmail" placeholder="البريد الإلكتروني لاستلام الحساب"></div>
             </div>
+            <div class="form-group"><input type="tel" id="orderPhone" placeholder="رقم الواتساب الخاص بك (إجباري)"></div>
             
             <div class="form-group">
-                <label>طريقة الدفع:</label>
+                <label>اختر طريقة الدفع:</label>
                 <select id="payMethod" onchange="togglePaymentInfo()">
-                    <option value="استفسار (بدون دفع)">فقط أستفسر (استكمال في واتساب)</option>
-                    <!-- سيتم حقن الطرق ديناميكياً من Sheet -->
+                    <option value="none">-- اختر طريقة الدفع --</option>
+                    <option value="Wallet">رصيد المحفظة (خصم مباشر)</option>
+                    <option value="Chargily">البطاقة الذهبية / CIB (دفع آلي)</option>
+                    <option value="Binance">بينانس (Binance Pay)</option>
+                    <option value="Bybit">باي بت (Bybit)</option>
+                    <option value="BaridiMob">بريدي موب (تحويل يدوي)</option>
                 </select>
             </div>
+            
+            <div id="walletSection" class="hidden">
+                <div class="notice-box" style="text-align:center; font-weight: bold; background: #e8f5e9; color: var(--success); border-color: var(--success);">
+                    رصيدك الحالي: <span id="checkoutWalletBalance">0</span> DZD
+                </div>
+                <button class="primary-btn" onclick="payWithWallet()" id="walletSubmitBtn" style="background: var(--text-dark);">
+                    الدفع من المحفظة وتأكيد الطلب <i class="fas fa-wallet"></i>
+                </button>
+            </div>
 
-            <div id="paymentDetails" class="hidden">
-                <div class="notice-box" id="payInstructions" style="direction:ltr; text-align:center;"></div>
+            <div id="chargilySection" class="hidden">
+                <button class="primary-btn cib-btn" onclick="payWithChargily()" id="chargilySubmitBtn">
+                    إكمال الدفع بـ البطاقة الذهبية / CIB <i class="fas fa-credit-card"></i>
+                </button>
+            </div>
+
+            <div id="manualPaymentDetails" class="hidden">
+                <div class="notice-box" id="payInstructions" style="direction:ltr; text-align:center; font-size:1.1rem;"></div>
                 <label class="file-upload" onclick="document.getElementById('receiptFile').click()">
-                    📸 <b>اضغط لرفع صورة وصل الدفع</b>
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 24px; margin-bottom: 10px; display: block;"></i> اضغط لرفع صورة وصل الدفع
                     <input type="file" id="receiptFile" accept="image/*" style="display:none;" onchange="handleFileUpload(event)">
                 </label>
-                <div id="uploadStatus" style="text-align:center; color:var(--success); font-weight:bold; margin-bottom:10px;"></div>
+                <div id="uploadStatus" style="text-align:center; color:var(--success); font-weight:bold; margin-bottom:15px;"></div>
+                <button class="primary-btn whatsapp-btn" onclick="submitManualOrder()" id="submitBtn">إرسال الطلب للمراجعة <i class="fas fa-check"></i></button>
             </div>
-            
-            <button class="primary-btn" onclick="copyInvoice()" style="background:#4b6584; margin-bottom:10px;">📋 نسخ الفاتورة</button>
-            <button class="primary-btn whatsapp-btn" onclick="submitOrder()" id="submitBtn">تأكيد الطلب 🚀</button>
         </div>
     </div>
 
-    <!-- Modal: النجاح -->
+    <!-- نافذة شحن المحفظة والنجاح (نفس الكود السابق تم الحفاظ عليه) -->
+    <div class="modal-overlay" id="rechargeModal">
+        <div class="modal-box">
+            <button class="close-btn" onclick="closeModal('rechargeModal')"><i class="fas fa-times"></i></button>
+            <h2 style="text-align:center; margin-bottom:20px; font-weight: 800;">شحن المحفظة</h2>
+            <div class="form-group"><input type="number" id="rechargeAmount" placeholder="أدخل المبلغ المراد شحنه (DZD)"></div>
+            <div class="form-group">
+                <label>طريقة الدفع:</label>
+                <select id="rechargeMethod" onchange="toggleRechargeInfo()">
+                    <option value="none">-- اختر طريقة الدفع --</option>
+                    <option value="Binance">بينانس (Binance Pay)</option>
+                    <option value="BaridiMob">بريدي موب</option>
+                </select>
+            </div>
+            <div id="rechargeManualDetails" class="hidden">
+                <div class="notice-box" id="rechargeInstructions" style="direction:ltr; text-align:center;"></div>
+                <label class="file-upload" onclick="document.getElementById('rechargeReceiptFile').click()">
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 24px; margin-bottom: 10px; display: block;"></i> رفع وصل التحويل
+                    <input type="file" id="rechargeReceiptFile" accept="image/*" style="display:none;" onchange="handleRechargeUpload(event)">
+                </label>
+                <div id="rechargeUploadStatus" style="text-align:center; color:var(--success); font-weight:bold; margin-bottom:15px;"></div>
+                <button class="primary-btn" onclick="submitRechargeRequest()" id="rechargeBtn">إرسال طلب الشحن</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="successModal">
-        <div class="modal-box" style="text-align: center;">
-            <button class="close-btn" onclick="closeModal('successModal')">&times;</button>
-            <h2 style="color:var(--success); margin-bottom:15px;">✅ تم استلام طلبك!</h2>
-            <p style="margin-bottom:20px;">رقم طلبك: <b id="successOrderId" style="color:var(--primary);"></b></p>
-            <p style="margin-bottom:20px;">كيف تفضل إكمال التفعيل؟</p>
-            <button class="primary-btn whatsapp-btn" onclick="goToSocial('wa')">أكمل في الواتساب 📱</button>
-            <button class="primary-btn" onclick="goToSocial('ig')" style="background:#E1306C; margin-bottom:10px;">انستغرام 📸</button>
-            <button class="primary-btn" onclick="goToSocial('fb')" style="background:#1877F2;">فيسبوك 📘</button>
+        <div class="modal-box" style="text-align:center;">
+            <button class="close-btn" onclick="closeModal('successModal')"><i class="fas fa-times"></i></button>
+            <div style="width: 80px; height: 80px; background: #e8f5e9; border-radius: 50%; display: flex; justify-content: center; align-items: center; margin: 0 auto 20px;">
+                <i class="fas fa-check" style="font-size: 40px; color: var(--success);"></i>
+            </div>
+            <h2 style="color:var(--success); margin-bottom:15px; font-weight: 800;" id="successTitle">تمت العملية بنجاح!</h2>
+            <p style="margin-bottom:20px; color: var(--text-gray);" id="successMsg"></p>
+            <button class="primary-btn" onclick="closeModal('successModal'); switchPage('home');">حسناً، متابعة</button>
         </div>
     </div>
 
-    <script>
-        // إرجاع رابط سيرفر جوجل القديم بناءً على طلبك
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxc52ifIOuXUJIlAJ7nH03PWbBVIvmIqpK45VxACGdNT2edIW48Pqer4PtmDXOUSXzf/exec";
-        
-        let storeProducts = JSON.parse(localStorage.getItem('riox_products')) || [];
-        let siteSettings = {};
-        let activeProduct = null, currentDuration = "", basePrice = 0, receiptBase64 = "";
-
-        // جلب الإعدادات (طرق الدفع) من جوجل شيت عند تحميل الصفحة
-        async function fetchSettings() {
-            try {
-                let response = await fetch(WEB_APP_URL + "?action=getData");
-                siteSettings = await response.json();
-                
-                let select = document.getElementById('payMethod');
-                if(siteSettings.BaridiMob_RIP) select.innerHTML += `<option value="BaridiMob">بريدي موب (BaridiMob)</option>`;
-                if(siteSettings.Binance_Pay_ID) select.innerHTML += `<option value="Binance">بينانس (Binance Pay)</option>`;
-            } catch(e) { console.log("خطأ في جلب الإعدادات"); }
-        }
-
-        // للمعاينة فقط إذا كانت اللوكال ستورج فارغة
-        if(storeProducts.length === 0) {
-            storeProducts = [
-                { id: 1, name: "Claude Pro", type: "شخصي", prices: {"1 شهر": 6580}, img: "", available: true },
-                { id: 2, name: "Canva Pro", type: "بدعوة", prices: {"12 شهر": 500}, img: "", available: true }
-            ];
-        }
-
-        function initStore() {
-            fetchSettings();
-            const grid = document.getElementById('productsGrid');
-            grid.innerHTML = '';
-            storeProducts.forEach(product => {
-                const firstPrice = Object.values(product.prices)[0];
-                grid.innerHTML += `
-                    <div class="product-card" onclick="if(${product.available}) openDetails(${product.id})">
-                        <span class="badge" style="background:${product.type==='شخصي'?'#28a745':'#ff9800'}">${product.type}</span>
-                        <div class="product-image-container"><img src="${product.img || 'https://via.placeholder.com/150'}" alt=""></div>
-                        <h3>${product.name}</h3>
-                        <span style="font-size:0.85rem; color:#666;">ابتداءً من ${firstPrice} DZD</span>
-                    </div>`;
-            });
-        }
-
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.getElementById('sidebarOverlay').classList.toggle('active');
-        }
-
-        function switchPage(pageId) {
-            document.querySelectorAll('.page-sec').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId + '-sec').classList.add('active');
-            document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
-            event.target.classList.add('active');
-            toggleSidebar();
-        }
-
-        function openDetails(id) {
-            activeProduct = storeProducts.find(p => p.id === id);
-            document.getElementById('modalTitle').textContent = activeProduct.name;
-            
-            // الذكاء: تغيير النص بناءً على النوع
-            const noticeBox = document.getElementById('modalNotice');
-            noticeBox.innerHTML = activeProduct.type === "بدعوة" 
-                ? "📍 <b>منتج بدعوة:</b> يرجى توفير إيميلك فقط في الصفحة التالية وسنرسل لك رابط التفعيل." 
-                : "📍 <b>منتج شخصي:</b> سيتم إنشاء الحساب الجاهز لك، استكمل الطلب لتستلمه.";
-
-            const dContainer = document.getElementById('modalDurations');
-            dContainer.innerHTML = "";
-            let isFirst = true;
-            for (const [duration, price] of Object.entries(activeProduct.prices)) {
-                const btn = document.createElement('button');
-                btn.className = `duration-btn ${isFirst ? 'active' : ''}`;
-                btn.textContent = duration;
-                if(isFirst) { currentDuration = duration; basePrice = parseInt(price); document.getElementById('modalPrice').textContent = price + " DZD"; isFirst = false; }
-                
-                btn.onclick = function() {
-                    document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    currentDuration = duration; basePrice = parseInt(price);
-                    document.getElementById('modalPrice').textContent = price + " DZD";
-                };
-                dContainer.appendChild(btn);
-            }
-            document.getElementById('detailsModal').classList.add('active');
-        }
-
-        function openCheckout() {
-            closeModal('detailsModal');
-            // تغيير وصف الإيميل بذكاء
-            document.getElementById('emailLabel').textContent = activeProduct.type === "بدعوة" ? "أدخل الإيميل الذي تريد تفعيل الدعوة عليه:" : "إيميل استلام الفاتورة والحساب:";
-            document.getElementById('checkoutModal').classList.add('active');
-            document.getElementById('payMethod').value = "استفسار (بدون دفع)";
-            togglePaymentInfo();
-            receiptBase64 = ""; document.getElementById('uploadStatus').textContent = "";
-        }
-
-        function togglePaymentInfo() {
-            let method = document.getElementById('payMethod').value;
-            let detailsDiv = document.getElementById('paymentDetails');
-            let instruct = document.getElementById('payInstructions');
-            
-            if(method === "BaridiMob") {
-                detailsDiv.classList.remove('hidden');
-                instruct.innerHTML = `<b>RIP:</b><br> ${siteSettings.BaridiMob_RIP || 'رقم الحساب'} <br><small>أرسل المبلغ ثم ارفع الوصل</small>`;
-            } else if(method === "Binance") {
-                detailsDiv.classList.remove('hidden');
-                instruct.innerHTML = `<b>Binance Pay ID:</b><br> ${siteSettings.Binance_Pay_ID || 'ID'} <br><small>أرسل المبلغ ثم ارفع الوصل</small>`;
-            } else {
-                detailsDiv.classList.add('hidden');
-            }
-        }
-
-        function handleFileUpload(event) {
-            let file = event.target.files[0];
-            if(file) {
-                let reader = new FileReader();
-                reader.onloadend = function() {
-                    receiptBase64 = reader.result;
-                    document.getElementById('uploadStatus').textContent = "✅ تم إرفاق الوصل بنجاح!";
-                }
-                reader.readAsDataURL(file); // تحويل مباشر لـ Base64
-            }
-        }
-
-        function generateInvoiceText(orderId) {
-            return `*طلب جديد | riox ads* 🚀\n🔖 *الطلب:* ${orderId}\n🛒 *المنتج:* ${activeProduct.name}\n⏳ *المدة:* ${currentDuration}\n💰 *السعر:* ${basePrice} DZD\n💳 *الدفع:* ${document.getElementById('payMethod').value}\nالاسم: ${document.getElementById('orderName').value}\nالإيميل: ${document.getElementById('orderEmail').value}`;
-        }
-
-        function copyInvoice() {
-            navigator.clipboard.writeText(generateInvoiceText("جديد")).then(() => alert("✅ تم نسخ الفاتورة."));
-        }
-
-        let globalOrderId = "";
-        function submitOrder() {
-            const name = document.getElementById('orderName').value.trim();
-            const phone = document.getElementById('orderPhone').value.trim();
-            const email = document.getElementById('orderEmail').value.trim();
-            const payMethod = document.getElementById('payMethod').value;
-
-            if(!name || !phone || !email) { alert("يرجى تعبئة جميع المعلومات"); return; }
-            if(payMethod !== "استفسار (بدون دفع)" && !receiptBase64) { alert("الرجاء إرفاق صورة وصل الدفع لتأكيد الطلب."); return; }
-
-            globalOrderId = "RX-" + Math.floor(10000 + Math.random() * 90000);
-            document.getElementById('submitBtn').textContent = "جاري الإرسال ⏳...";
-            document.getElementById('submitBtn').disabled = true; // منع التكرار
-            
-            let orderData = {
-                orderId: globalOrderId, name: name, phone: phone, email: email, product: activeProduct.name,
-                duration: currentDuration, price: basePrice, paymentMethod: payMethod,
-                activationAccount: activeProduct.type === "بدعوة" ? email : "سيتواصل عبر الواتساب",
-                receiptBase64: receiptBase64
-            };
-
-            // إرسال POST مباشر إلى سيرفرك (بدون LocalStorage)
-            fetch(WEB_APP_URL, {
-                method: "POST", mode: "no-cors",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ action: "new_order", data: orderData })
-            });
-
-            setTimeout(() => {
-                closeModal('checkoutModal');
-                document.getElementById('successOrderId').textContent = globalOrderId;
-                document.getElementById('successModal').classList.add('active');
-                document.getElementById('submitBtn').textContent = "تأكيد الطلب 🚀";
-                document.getElementById('submitBtn').disabled = false;
-            }, 1000);
-        }
-
-        function goToSocial(platform) {
-            let txt = encodeURIComponent(generateInvoiceText(globalOrderId));
-            if(platform === 'wa') window.open(`https://wa.me/213557235850?text=${txt}`);
-            else if(platform === 'ig') window.open(`https://instagram.com/rioxads_dz`);
-            else if(platform === 'fb') window.open(`https://m.me/rioxads`);
-        }
-
-        // نظام البحث الجديد المتصل بقاعدة البيانات (Google Sheets)
-        async function trackOrder() {
-            let id = document.getElementById('trackInput').value.trim();
-            let resBox = document.getElementById('trackResult');
-            let btn = document.getElementById('trackBtn');
-            if(!id) return;
-            
-            resBox.style.display = "block";
-            resBox.innerHTML = "⏳ جاري البحث في النظام...";
-            btn.disabled = true;
-
-            try {
-                let response = await fetch(WEB_APP_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ action: "track_order", orderId: id })
-                });
-                let result = await response.json();
-                
-                if(result.found) {
-                    resBox.innerHTML = `<div style="color:var(--dark);">
-                        <b>الزبون:</b> ${result.name}<br>
-                        <b>المنتج:</b> ${result.product}<br>
-                        <b>الحالة:</b> <span style="color:${result.status==='Completed'?'var(--success)':'#ff9800'}">${result.status === 'Completed' ? '✅ مكتمل' : '⏳ قيد الانتظار'}</span>
-                    </div>`;
-                } else {
-                    resBox.innerHTML = "❌ لم يتم العثور على الطلب تأكد من الرقم.";
-                }
-            } catch(e) {
-                resBox.innerHTML = "⚠️ حدث خطأ في الاتصال بالسيرفر. أعد المحاولة.";
-            }
-            btn.disabled = false;
-        }
-
-        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-        window.onclick = function(e) { if (e.target.classList.contains('modal-overlay')) e.target.classList.remove('active'); }
-        window.onload = initStore;
-    </script>
+    <!-- ربط ملف الجافاسكريبت -->
+    <script src="app.js"></script>
 </body>
 </html>
